@@ -1,0 +1,34 @@
+package ups.edu.ec.clase.dao;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import ups.edu.ec.clase.Persona;
+
+
+public class LoginDao {
+	
+	@Inject 
+	private EntityManager em;
+	
+	
+
+	public Persona BuscarLog(String email, String contrasena) {
+		try {
+		
+		Query query = em.createQuery("SELECT a FROM Persona a WHERE a.email = :email AND a.contrasena = :contrasena" , Persona.class); 
+		query.setParameter("email", email);
+		query.setParameter("contrasena", contrasena);
+		Persona adulto = (Persona) query.getSingleResult();
+	    System.out.println("adulto encontrado "+adulto.getNombres());
+	    if(adulto!=null)
+		return adulto;
+	    
+		
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+}

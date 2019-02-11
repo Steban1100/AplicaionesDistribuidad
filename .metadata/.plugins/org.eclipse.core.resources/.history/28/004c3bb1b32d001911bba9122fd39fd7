@@ -1,0 +1,108 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	 template="blank.xhtml">
+
+
+	<ui:define name="Persona">Pagina de prueba mijin</ui:define>
+	
+	<ui:define name="Contenido">
+		<h:head>
+	<f:metadata>
+		<f:viewParam id="id" name="id" value="#{administradorBean.id}" />
+		<f:viewAction action="#{administradorBean.cargar()}" />
+	</f:metadata>
+</h:head>
+<body>
+
+	<h1>Crear Administrador</h1>
+
+	<h:form>
+		<h:panelGrid columns="3">
+			<h:outputLabel value="Codigo:  " for="codigo" />
+			<h:inputText value="#{administradorBean.admin.codigo}"
+				id="codigo" />
+			<h:message for="codigo" />
+
+			<h:outputLabel value="Nombres:  " for="nombre" />
+			<h:inputText value="#{administradorBean.admin.nombre}"
+				id="nombre" />
+			<h:message for="nombre" />
+
+			<h:outputLabel value="Email:  " for="email" />
+			<h:inputText value="#{administradorBean.admin.email}"
+				id="email" />
+			<h:message for="email" />
+			
+			<h:outputLabel value="Contraseña:  " for="contrasena" />
+			<h:inputText value="#{administradorBean.admin.contrasena}"
+				id="contrasena" />
+			<h:message for="contrasena" />
+
+			<h:outputLabel value="Cargo:  " for="cargo" />
+			<h:inputText value="#{administradorBean.admin.cargo}"
+				id="cargo" />
+			<h:message for="cargo" />
+			
+			<h:outputLabel value="Empresa" />
+			<h:selectOneMenu id="cbxEmpresa" value="#{administradorBean.codigoEmpresa}">
+			<f:selectItems  value="#{administradorBean.empresas}"
+							var="empresa"
+						itemLabel="#{empresa.nombre}"
+						itemValue="#{empresa.codigo}"/>
+			</h:selectOneMenu>
+			<br></br>
+			<h:commandButton action="#{administradorBean.guardar()}"
+				value="Guardar" />
+
+		</h:panelGrid>
+
+		<h:dataTable var="_administradores"
+			value="#{administradorBean.administradores}"
+			 width="50%" style="text-align:center;" border="3">
+			<h:column>
+				<f:facet name="header">Codigo</f:facet>
+                #{_administradores.codigo}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Nombre</f:facet>
+                #{_administradores.nombre}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Email</f:facet>
+                #{_administradores.email}
+            </h:column>
+            <h:column>
+				<f:facet name="header">Contraseña</f:facet>
+                #{_administradores.contrasena}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Cargo</f:facet>
+                #{_administradores.cargo}
+            </h:column>
+            <h:column>
+				<f:facet name="header">Empresa</f:facet>
+                #{_administradores.emp_codigo.codigo}
+            </h:column>
+            
+
+			<h:column>
+				<f:facet name="header">Acciones</f:facet>
+				<h:commandButton
+					action="#{administradorBean.editar(_administradores)}"
+					value="Editar" />
+			</h:column>
+			
+			<h:column>
+                <f:facet name="header">Acciones</f:facet>
+                <h:commandButton immediate="true" action="#{administradorBean.eliminar(_administradores.codigo)}" value="Eliminar" />
+            </h:column>
+
+		</h:dataTable>
+
+	</h:form>
+
+</body>
+		</ui:define>
+</ui:composition>

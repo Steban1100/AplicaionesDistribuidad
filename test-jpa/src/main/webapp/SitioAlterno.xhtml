@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	 template="blank.xhtml">
+
+
+	<ui:define name="Persona">Pagina de prueba mijin</ui:define>
+	
+	<ui:define name="Contenido">
+	<h:head>
+<f:metadata>
+        <f:viewParam id="id" name="id" value="#{sitioAlternoBean.id}"/>
+        <f:viewAction action="#{sitioAlternoBean.cargar()}" />
+ 	</f:metadata>
+</h:head> 
+<body> 
+<h1>Crear Sitio Alterno</h1>
+
+<h:form>
+	<h:panelGrid columns="3">
+		<h:outputLabel value="Codigo: 400 - 499 " for="codigo"/>
+		<h:inputText value="#{sitioAlternoBean.sitio.codigo}" id="codigo" />
+		<h:message for="codigo"/>
+		
+		<h:outputLabel value="Ubicacion:  " for="ubicacion"/>
+		<h:inputText value="#{sitioAlternoBean.sitio.ubicacion}" id="ubicacion" />
+		<h:message for="ubicacion"/>
+		
+		<h:outputLabel value="Descripcion:  " for="descripcion"/>
+		<h:inputText value="#{sitioAlternoBean.sitio.descripcion}" id="descripcion" />
+		<h:message for="descripcion"/>
+		
+		<h:outputLabel value="Tamaño:  " for="tamano"/>
+		<h:inputText value="#{sitioAlternoBean.sitio.tamano}" id="tamano" />
+		<h:message for="tamano"/>
+				
+		<h:commandButton action="#{sitioAlternoBean.guardar()}" value="Guardar" />
+		
+	</h:panelGrid>
+
+	<h:dataTable var="_sitioalterno" value="#{sitioAlternoBean.sitioalternos}"
+             width="50%" style="text-align:center;" border="3">
+            <h:column>
+                <f:facet name="header">Codigo</f:facet>
+                #{_sitioalterno.codigo}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Ubicacion</f:facet>
+                #{_sitioalterno.ubicacion}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Descripcion</f:facet>
+                #{_sitioalterno.descripcion}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tamaño</f:facet>
+                #{_sitioalterno.tamano}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Acciones</f:facet>
+                <h:commandButton action="#{sitioAlternoBean.editar(_sitioalterno)}" value="Editar" />
+            </h:column>
+            
+<!--             <h:column> -->
+<!--                 <f:facet name="header">Acciones</f:facet> -->
+<!--                 <h:commandButton immediate="true" action="#{sitioAlternoBean.eliminar(_sitioalterno.codigo)}" value="Eliminar" /> -->
+<!--             </h:column> -->
+
+        </h:dataTable>
+
+</h:form>
+
+</body> 
+		</ui:define>
+</ui:composition>

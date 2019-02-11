@@ -1,0 +1,70 @@
+package ups.edu.ec.clase.dao;
+
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import ups.edu.ec.clase.Persona;
+import ups.edu.ec.clase.PersonaMostrar;
+
+@Stateless
+public class PersonaDAO {
+
+	@Inject
+	private EntityManager em;
+
+	public void insertar(Persona persona) {
+		em.persist(persona);
+	}
+
+	public void actualizar(Persona persona) {
+		em.merge(persona);
+	}
+
+	public void borrar(int codigo) {
+		em.remove(leer(codigo));
+	}
+
+	public Persona leer(int codigo) {
+		Persona aux = em.find(Persona.class, codigo);
+		return aux;
+	}
+
+	public List<Persona> listaPersonas() {
+		String jpql = "SELECT per FROM Persona per";
+		Query query = em.createQuery(jpql, Persona.class);
+		List<Persona> listadoPersonas = query.getResultList();
+		for (Persona persona : listadoPersonas) {
+			System.out.println(">>>>>>>>>>>" + persona.getCedula() + ", " + persona.getEmp_codigo().getCodigo() + ", "
+					+ persona.getEmp_per_codigo().getCodigo());
+		}
+		return listadoPersonas;
+	}
+
+	public PersonaMostrar PersonaMostrar() {
+		String jpql = "SELECT per FROM Persona per WHERE per.contrasena LIKE ?1 AND per.email LIKE ?2";
+		Query query = em.createQuery(jpql, Persona.class);
+		query.setParameter(1, "123456");
+		query.setParameter(2, "gsolano@cli.com");
+		Persona persona = (Persona) query.getSingleResult();
+		PersonaMostrar pm = new PersonaMostrar();
+		System.out.println(">>>>>>>>>>>" + persona.getCedula() + persona.getNombres() + persona.getCelular()
+				+ persona.getEmail() + persona.getFechaNacimiento() + "---------"
+				+ persona.getEmp_per_codigo().getNombre() + persona.getEmp_per_codigo().getDireccion()
+				+ persona.getEmp_per_codigo().getEmail() + "/////////" + persona.getEmp_codigo().getNombre());
+		pm.setCedula(persona.getCedula());
+		pm.setNombre(persona.getNombres());
+		pm.setCelular(persona.getCelular());
+		pm.setEmail(persona.getEmail());
+		pm.setFecha_naci(persona.getFechaNacimiento());
+		pm.setEmp_persona(persona.getEmp_per_codigo().getNombre());
+		pm.setDir_emp_persona(persona.getEmp_per_codigo().getDireccion());
+		pm.setEmail_emp_persona(persona.getEmp_per_codigo().getEmail());
+		pm.setEmpresa(persona.getEmp_codigo().getNombre());
+
+		return pm;
+	}
+}

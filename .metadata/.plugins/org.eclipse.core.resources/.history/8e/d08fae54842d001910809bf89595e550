@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	 template="blank.xhtml">
+
+
+	<ui:define name="Actividades">Pagina de prueba mijin</ui:define>
+	
+	<ui:define name="Contenido">
+		
+	<h:head>
+	<f:metadata>
+        <f:viewParam id="id" name="id" value="#{actividadBean.id}"/>
+        <f:viewAction action="#{actividadBean.cargar()}" />
+ 	</f:metadata>
+</h:head> 
+<body> 
+
+<h1>Crear Actividades</h1>
+
+<h:form>
+	<h:panelGrid columns="3">
+		<h:outputLabel value="Codigo:  " for="codigo"/>
+		<h:inputText value="#{actividadBean.act.codigo}" id="codigo" />
+		<h:message for="codigo"/>
+		
+		<h:outputLabel value="Nombres:  " for="nombre"/>
+		<h:inputText value="#{actividadBean.act.nombre}" id="nombre" />
+		<h:message for="nombre"/>
+		
+		<h:outputLabel value="Nivel:  " for="nivel"/>
+		<h:inputText value="#{actividadBean.act.nivel}" id="nivel" />
+		<h:message for="nivel"/>
+		
+		<h:outputLabel value="Tiempo:  " for="tiempo"/>
+		<h:inputText value="#{actividadBean.act.tiempo}" id="tiempo" />
+		<h:message for="tiempo"/>
+		
+		 <h:outputLabel value="Empresa_Persona" />
+			<h:selectOneMenu id="cbxEmpresaPersona" value="#{actividadBean.codigoEmpresaPersona}">
+			<f:selectItems  value="#{actividadBean.empresaPersonas}"
+							var="empresaPersona"
+						itemLabel="#{empresaPersona.nombre}"
+						itemValue="#{empresaPersona.codigo}"/>
+			</h:selectOneMenu>
+			
+			<h:outputLabel value="Sitio_Alterno" />
+			<h:selectOneMenu id="cbxSitioAlterno" value="#{actividadBean.codigoSitioAlterno}">
+			<f:selectItems  value="#{actividadBean.sitioAlternos}"
+							var="sitioAlterno"
+						itemLabel="#{sitioAlterno.descripcion}"
+						itemValue="#{sitioAlterno.codigo}"/>
+			</h:selectOneMenu>
+		
+				
+		<h:commandButton action="#{actividadBean.guardar()}" value="Guardar" />
+		
+	</h:panelGrid>
+	
+	<h:dataTable var="_actividad" value="#{actividadBean.actividades}"
+            styleClass="simpletablestyle">
+            <h:column>
+                <f:facet name="header">Codigo</f:facet>
+                #{_actividad.codigo}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                #{_actividad.nombre}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nivel</f:facet>
+                #{_actividad.nivel}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tiempo</f:facet>
+                #{_actividad.tiempo}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Empresa_Persona</f:facet>
+                #{_actividad.emp_per_codigo.codigo}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Sitio_Alterno</f:facet>
+                #{_actividad.sitio_alterno_codigo.codigo}
+            </h:column>
+                     
+            <h:column>
+                <f:facet name="header">Acciones</f:facet>
+                <h:commandButton action="#{actividadBean.editar(_actividad)}" value="Editar" />
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Acciones</f:facet>
+                <h:commandButton immediate="true"  action="#{actividadBean.eliminar(_actividad.codigo)}" value="Eliminar" />
+            </h:column>
+
+        </h:dataTable>
+
+</h:form>
+
+</body> 	
+			
+	</ui:define>
+</ui:composition>

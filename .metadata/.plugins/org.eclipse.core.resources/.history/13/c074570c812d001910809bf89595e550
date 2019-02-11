@@ -1,0 +1,57 @@
+package ups.edu.ec.clase.controlador;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+
+import ups.edu.ec.clase.service.LoginBussiness;
+
+
+@ManagedBean
+@ViewScoped
+public class LoginBean {
+	
+	@Inject
+	private LoginBussiness logBussiness;
+	@Inject
+	private FacesContext facesContext;
+
+	private String usuario;
+	private String Contrasenia;
+	
+
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	public String getContrasenia() {
+		return Contrasenia;
+	}
+	public void setContrasenia(String contrasenia) {
+		Contrasenia = contrasenia;
+	}
+	
+	
+	@PostConstruct
+	public void init() {
+		
+	}
+	
+	public String login(){
+		
+		String adulto = logBussiness.Logueo(usuario, Contrasenia);
+		System.out.println("loguin "+adulto);
+		if(adulto !="no")
+			return "blank.xhtml";
+		else
+		return "SitioLogin.xhtml";
+	}
+	
+	public String crearAdmin() {
+		return "SitioAdministrador";
+	}
+}

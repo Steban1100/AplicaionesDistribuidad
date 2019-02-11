@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	 template="blank.xhtml">
+
+
+	<ui:define name="Persona">Pagina de prueba mijin</ui:define>
+	
+	<ui:define name="Contenido">
+	<h:head>
+	<f:metadata>
+        <f:viewParam id="id" name="id" value="#{empresaBean.id}"/>
+        <f:viewAction action="#{empresaBean.cargar()}" />
+ 	</f:metadata>
+</h:head> 
+<body> 
+
+<h1>Crear Empresa</h1>
+
+<h:form>
+	<h:panelGrid columns="3">
+		<h:outputLabel value="Codigo:  " for="codigo"/>
+		<h:inputText value="#{empresaBean.emp.codigo}" id="codigo" />
+		<h:message for="codigo"/>
+		
+		<h:outputLabel value="Nombres:  " for="nombre"/>
+		<h:inputText value="#{empresaBean.emp.nombre}" id="nombre" />
+		<h:message for="nombre"/>
+		
+		<h:outputLabel value="Direccion:  " for="direccion"/>
+		<h:inputText value="#{empresaBean.emp.direccion}" id="direccion" />
+		<h:message for="direccion"/>
+		
+		<h:outputLabel value="Email:  " for="email"/>
+		<h:inputText value="#{empresaBean.emp.email}" id="email" />
+		<h:message for="email"/>
+				
+		<h:commandButton action="#{empresaBean.guardar()}" value="Guardar" />
+		
+	</h:panelGrid>
+	
+	<h:dataTable var="_empresa" value="#{empresaBean.empresas}" styleClass="simpletablestyle" border="2">
+            <h:column>
+                <f:facet name="header">Codigo</f:facet>
+                #{_empresa.codigo}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                #{_empresa.nombre}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Direccion</f:facet>
+                #{_empresa.direccion}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                #{_empresa.email}}
+            </h:column>
+            <br></br>
+            
+
+        </h:dataTable>
+        
+        <h:column>
+                <f:facet name="header">Acciones</f:facet>
+                <h:commandButton action="#{empresaBean.editar(_empresa)}" value="Editar" />
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Acciones</f:facet>
+                <h:commandButton immediate="true" action="#{empresaBean.eliminar(_empresa.codigo)}" value="Eliminar" />
+            </h:column>
+
+</h:form>
+
+</body>
+		</ui:define>
+</ui:composition>

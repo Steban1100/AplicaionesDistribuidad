@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<title>Not present in rendered output</title>
+</head>
+<body>
+	<h:form>
+
+		<div class="log-form">
+  <h2>Login to your account</h2>
+  <form>
+    <input type="text" title="username" placeholder="username" />
+    <input type="password" title="username" placeholder="password" />
+    <button type="submit" class="btn">Login</button>
+    <a class="forgot" href="#">Forgot Username?</a>
+  </form>
+</div><!--end log form -->
+
+	</h:form>
+</body>
+
+</html>

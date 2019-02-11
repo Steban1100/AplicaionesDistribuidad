@@ -1,0 +1,104 @@
+package ups.edu.ec.clase;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+/**
+ * Esta clase crea la tabla administrador con todos sus parametros
+ * @author LENOVO
+ *
+ */
+@Entity
+@Table(name = "tbl_administrador")
+public class Administrador {
+	@Id
+	@NotNull
+	@Column(name = "adm_codigo", length = 4)
+	private int codigo;
+
+	@NotNull
+	@Column(name = "adm_nombre")
+	private String nombre;
+
+	@Email
+	@NotNull
+	@Column(name = "adm_email")
+	private String email;
+
+	@NotNull
+	@Column(name = "adm_contrasena")
+	private String contrasena;
+	
+	@NotNull
+	@Column(name = "adm_cargo")
+	private String cargo;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "emp_codigo")
+	private Empresa emp_codigo;
+
+	
+	
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+	public Empresa getEmp_codigo() {
+		return emp_codigo;
+	}
+
+	public void setEmp_codigo(Empresa emp_codigo) {
+		this.emp_codigo = emp_codigo;
+	}
+	
+
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
+	@Override
+	public String toString() {
+		return "Administrador [codigo=" + codigo + ", nombre=" + nombre + ", email=" + email + ", cargo=" + cargo + "]";
+	}
+
+}

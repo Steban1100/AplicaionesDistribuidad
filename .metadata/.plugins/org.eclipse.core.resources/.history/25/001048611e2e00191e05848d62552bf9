@@ -1,0 +1,138 @@
+package ups.edu.ec.clase;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+
+@Entity
+@Table(name = "tbl_persona")
+public class Persona {
+
+	@Id
+	@Column(name = "per_codigo", length = 4)
+	private int codigo;
+
+	@NotNull
+	@Column(name = "per_cedula", length = 10)
+	private String cedula;
+
+	@NotNull
+	@Column(name = "per_nombres")
+	private String nombres;
+
+	@NotNull
+	@Column(name = "per_celular")
+	private String celular;
+
+	@Email
+	@NotNull
+	@Column(name = "per_email")
+	private String email;
+
+	@NotNull
+	@Column(name = "per_contrasena")
+	private String contrasena;
+
+	@Column(name = "per_fecha")
+	@Temporal(TemporalType.DATE)
+	private Date fechaNacimiento;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "emp_codigo")
+	private Empresa emp_codigo;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "emp_per_codigo")
+	private EmpresaPersona emp_per_codigo;
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+
+	public String getNombres() {
+		return nombres;
+	}
+
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
+	public Empresa getEmp_codigo() {
+		return emp_codigo;
+	}
+
+	public void setEmp_codigo(Empresa emp_codigo) {
+		this.emp_codigo = emp_codigo;
+	}
+
+	public EmpresaPersona getEmp_per_codigo() {
+		return emp_per_codigo;
+	}
+
+	public void setEmp_per_codigo(EmpresaPersona emp_per_codigo) {
+		this.emp_per_codigo = emp_per_codigo;
+	}
+
+	@Override
+	public String toString() {
+		return "Persona [codigo=" + codigo + ", cedula=" + cedula + ", nombres=" + nombres + ", celular=" + celular
+				+ ", email=" + email + ", contrasena=" + contrasena + ", fechaNacimiento=" + fechaNacimiento + "]";
+	}
+
+}

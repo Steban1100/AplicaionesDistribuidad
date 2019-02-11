@@ -1,0 +1,104 @@
+package ups.edu.ec.clase.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import ups.edu.ec.clase.PM;
+import ups.edu.ec.clase.Persona;
+import ups.edu.ec.clase.PersonaMostrar;
+
+@Stateless
+public class PersonaDAO {
+
+	@Inject
+	private EntityManager em;
+
+	public void insertar(Persona persona) {
+		em.persist(persona);
+	}
+
+	public void actualizar(Persona persona) {
+		em.merge(persona);
+	}
+
+	public void borrar(int codigo) {
+		em.remove(leer(codigo));
+	}
+
+	public Persona leer(int codigo) {
+		Persona aux = em.find(Persona.class, codigo);
+		return aux;
+	}
+
+	public List<Persona> listaPersonas() {
+		String jpql = "SELECT per FROM Persona per";
+		Query query = em.createQuery(jpql, Persona.class);
+		List<Persona> listadoPersonas = query.getResultList();
+		for (Persona persona : listadoPersonas) {
+			System.out.println(">>>>>>>>>>>" + persona.getCedula() + ", " + persona.getEmp_codigo().getCodigo() + ", "
+					+ persona.getEmp_per_codigo().getCodigo());
+		}
+		return listadoPersonas;
+	}
+
+	public List<PersonaMostrar> PersonaMostrar(String cedula) {
+		//String jpql = "SELECT per FROM Persona per WHERE per.contrasena LIKE ?1 AND per.email LIKE ?2";
+		String jpql = "SELECT per FROM Persona per WHERE per.cedula LIKE ?1";
+		Query query = em.createQuery(jpql, Persona.class);
+		query.setParameter(1, cedula);
+		List<Persona> lista = query.getResultList();
+		List<PersonaMostrar> listper = new ArrayList<>();
+		for (Persona persona : lista) {
+			PersonaMostrar pm = new PersonaMostrar();
+			System.out.println(">>>>>>>>>>>" + persona.getCedula() + persona.getNombres() + persona.getCelular()
+					+ persona.getEmail() + persona.getFechaNacimiento() + "---------"
+					+ persona.getEmp_per_codigo().getNombre() + persona.getEmp_per_codigo().getDireccion()
+					+ persona.getEmp_per_codigo().getEmail() + "/////////" + persona.getEmp_codigo().getNombre());
+			pm.setCedula(persona.getCedula());
+			pm.setNombre(persona.getNombres());
+			pm.setCelular(persona.getCelular());
+			pm.setEmail(persona.getEmail());
+			pm.setFecha_naci(persona.getFechaNacimiento());
+			pm.setEmp_persona(persona.getEmp_per_codigo().getNombre());
+			pm.setDir_emp_persona(persona.getEmp_per_codigo().getDireccion());
+			pm.setEmail_emp_persona(persona.getEmp_per_codigo().getEmail());
+			pm.setEmpresa(persona.getEmp_codigo().getNombre());
+			listper.add(pm);
+		}
+		return listper;
+	}
+
+	public List<PM> Mostrar(String contrasena, String email) {
+		//String jpql = "SELECT per FROM Persona per WHERE per.cedula LIKE ?1";
+		String jpql = "SELECT per FROM Persona per WHERE per.contrasena LIKE ?1 AND per.email LIKE ?2";
+		Query query = em.createQuery(jpql, Persona.class);
+		query.setParameter(1, contrasena);
+		query.setParameter(2, email);
+		List<Persona> lista = query.getResultList();
+		List<PM> listper = new ArrayList<>();
+		for (Persona persona : lista) {
+		PM pmm = new PM();
+		System.out.println(">>>>>>>>>>>" + persona.getCedula() + persona.getNombres() + persona.getCelular()
+				+ persona.getEmail() + persona.getFechaNacimiento() + "---------"
+				+ persona.getEmp_per_codigo().getNombre() + persona.getEmp_per_codigo().getDireccion()
+				+ persona.getEmp_per_codigo().getEmail() + "/////////" + persona.getEmp_codigo().getNombre());
+		pmm.setCodigo(persona.getCodigo());
+		pmm.setCedula(persona.getCedula());
+		pmm.setNombre(persona.getNombres());
+		pmm.setCelular(persona.getCelular());
+		pmm.setEmail(persona.getEmail());
+		pmm.setContrasena(persona.getContrasena());
+		pmm.setFecha(persona.getFechaNacimiento());
+		pmm.setEmpresa(persona.getEmp_codigo().getCodigo());
+		pmm.setEmpresa_persona(persona.getEmp_per_codigo().getCodigo());
+		listper.add(pmm);
+		}
+		return listper;
+	}
+
+}

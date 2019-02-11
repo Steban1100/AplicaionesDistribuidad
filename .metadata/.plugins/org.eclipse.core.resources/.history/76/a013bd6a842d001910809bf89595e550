@@ -1,0 +1,136 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	 template="blank.xhtml">
+
+
+	<ui:define name="Persona">Pagina de prueba mijin</ui:define>
+	
+	<ui:define name="Contenido">
+	<h:head>
+	<f:metadata>
+		<f:viewParam id="id" name="id" value="#{personaBean.id}" />
+		<f:viewAction action="#{personaBean.cargar()}" />
+	</f:metadata>
+</h:head>
+<body>
+
+	<h1>Crear Personas</h1>
+
+	<h:form>
+		<h:panelGrid columns="3">
+		
+			<h:outputLabel value="Codigo:  " for="codigo" />
+			<h:inputText value="#{personaBean.persona.codigo}" id="codigo" />
+			<h:message for="codigo" />
+
+			<h:outputLabel value="Cedula:  " for="cedula" />
+			<h:inputText value="#{personaBean.persona.cedula}" id="cedula" />
+			<h:message for="cedula" />
+
+			<h:outputLabel value="Nombres:  " for="nombre" />
+			<h:inputText value="#{personaBean.persona.nombres}"
+				id="nombre" />
+			<h:message for="nombre" />
+
+			<h:outputLabel value="Cedular:  " for="celular" />
+			<h:inputText value="#{personaBean.persona.celular}"
+				id="celular" />
+			<h:message for="celular" />
+
+			<h:outputLabel value="Email:  " for="email" />
+			<h:inputText value="#{personaBean.persona.email}" id="email" />
+			<h:message for="email" />
+
+			<h:outputLabel value="Contraseña:  " for="contrasena" />
+			<h:inputText value="#{personaBean.persona.contrasena}"
+				id="contrasena" />
+			<h:message for="contrasena" />
+
+			<h:outputLabel value="Fecha Nacimiento:  " for="fecha_nacimiento" />
+			<h:inputText value="#{personaBean.persona.fechaNacimiento}" id="fecha_nacimiento">
+			<f:convertDateTime pattern="yyyy/MM/dd" />
+			</h:inputText>
+			<h:message for="fecha_nacimiento" />
+			
+			<h:outputLabel value="Empresa" />
+			<h:selectOneMenu id="cbxEmpresa" value="#{personaBean.codigoEmpresa}">
+			<f:selectItems  value="#{personaBean.empresas}"
+							var="empresa"
+						itemLabel="#{empresa.nombre}"
+						itemValue="#{empresa.codigo}"/>
+			</h:selectOneMenu>
+			
+			<h:outputLabel value="Empresa_Persona" />
+			<h:selectOneMenu id="cbxEmpresaPersona" value="#{personaBean.codigoEmpresaPersona}">
+			<f:selectItems  value="#{personaBean.empresaPersonas}"
+							var="empresaPersona"
+						itemLabel="#{empresaPersona.nombre}"
+						itemValue="#{empresaPersona.codigo}"/>
+			</h:selectOneMenu>
+			
+
+			<h:commandButton action="#{personaBean.guardar()}"
+				value="Guardar" />
+
+		</h:panelGrid>
+
+		<h:dataTable var="_personas" value="#{personaBean.personas}"
+			styleClass="simpletablestyle">
+			<h:column>
+				<f:facet name="header">Codigo</f:facet>
+                #{_personas.codigo}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Cedula</f:facet>
+                #{_personas.cedula}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Nombre</f:facet>
+                #{_personas.nombres}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Celular</f:facet>
+                #{_personas.celular}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Email</f:facet>
+                #{_personas.email}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Contraseña</f:facet>
+                #{_personas.contrasena}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Fecha Nacimiento</f:facet>
+                #{_personas.fechaNacimiento}
+            </h:column>
+            <h:column>
+				<f:facet name="header">Empresa_Codigo</f:facet>
+                #{_personas.emp_codigo.codigo}
+            </h:column>
+            <h:column>
+				<f:facet name="header">EmpresaPersona_Codigo</f:facet>
+                #{_personas.emp_per_codigo.codigo}
+            </h:column>
+
+			<h:column>
+				<f:facet name="header">Acciones</f:facet>
+				<h:commandButton
+					action="#{personaBean.editar(_personas)}"
+					value="Editar"/>
+			</h:column>
+			
+			<h:column>
+                <f:facet name="header">Acciones</f:facet>
+                <h:commandButton immediate="true" action="#{personaBean.eliminar(_personas.codigo)}" value="Eliminar" />
+            </h:column>
+
+		</h:dataTable>
+
+	</h:form>
+
+</body>
+		</ui:define>
+</ui:composition>

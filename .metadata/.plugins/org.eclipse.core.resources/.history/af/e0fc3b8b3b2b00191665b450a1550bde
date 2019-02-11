@@ -1,0 +1,58 @@
+package ups.edu.ec.clase.service;
+
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
+import ups.edu.ec.clase.dao.PersonaDAO;
+import ups.edu.ec.clase.Persona;
+import ups.edu.ec.clase.PersonaMostrar;
+
+@Stateless
+public class PersonaService {
+
+	@Inject
+	private PersonaDAO Perdao;
+
+	public void registrar(Persona per) throws Exception {
+		Persona aux = Perdao.leer(per.getCodigo());
+		if (aux != null)
+			throw new Exception("Persona ya registrado");
+		else
+			Perdao.actualizar(per);		
+	}
+
+	public Persona leer(int codigo) throws Exception {
+		Persona personas = Perdao.leer(codigo);
+		if(personas == null)
+			throw new Exception("Persona no registrada");
+		return personas;
+	}
+
+	public void actualizar(Persona per) throws Exception {
+		Persona aux = Perdao.leer(per.getCodigo());
+		if (aux == null)
+			throw new Exception("Persona no registrado");
+		else
+			Perdao.actualizar(per);
+	}
+
+	public void eliminar(int codigo) throws Exception {
+		Persona personas = Perdao.leer(codigo);
+		if(personas == null)
+			throw new Exception("Persona no registrada");
+		else
+			Perdao.borrar(codigo);
+		
+	}
+
+	public List<Persona> listarPersona() {
+		return Perdao.listaPersonas();
+	}
+	
+	public PersonaMostrar PersonaMostrar() {
+		return Perdao.PersonaMostrar();
+	}
+
+}

@@ -1,0 +1,97 @@
+package ups.edu.ec.clase;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+@Entity
+@Table(name = "tbl_actividad")
+public class Actividades {
+
+	@Id
+	@NotNull
+	@Column(name = "act_codigo", length = 4)
+	private int codigo;
+
+	@NotNull
+	@Column(name = "act_nombre")
+	private String nombre;
+
+	@NotNull
+	@Column(name = "act_nivel")
+	private String nivel;
+
+	@NotNull
+	@Column(name = "act_tiempo")
+	private String tiempo;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "emp_per_codigo")
+	private EmpresaPersona emp_per_codigo;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "sitio_alterno_codigo")
+	private SitioAlterno sitio_alterno_codigo;
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
+
+	public String getTiempo() {
+		return tiempo;
+	}
+
+	public void setTiempo(String tiempo) {
+		this.tiempo = tiempo;
+	}
+
+	public EmpresaPersona getEmp_per_codigo() {
+		return emp_per_codigo;
+	}
+
+	public void setEmp_per_codigo(EmpresaPersona emp_per_codigo) {
+		this.emp_per_codigo = emp_per_codigo;
+	}
+
+	public SitioAlterno getSitio_alterno_codigo() {
+		return sitio_alterno_codigo;
+	}
+
+	public void setSitio_alterno_codigo(SitioAlterno sitio_alterno_codigo) {
+		this.sitio_alterno_codigo = sitio_alterno_codigo;
+	}
+
+	@Override
+	public String toString() {
+		return "Actividades [codigo=" + codigo + ", nombre=" + nombre + ", nivel=" + nivel + ", tiempo=" + tiempo + "]";
+	}
+
+}
